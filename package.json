@@ -8,6 +8,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build && vite build --config vite.content.config.ts",
+    "package": "npm run build && (cd dist && zip -r ../numfill.zip .)",
     "lint": "eslint .",
     "preview": "vite preview"
   },
