@@ -1,0 +1,701 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/png" href="/icons/icon-48.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NumFill by Mengleangyoeun - Test Sandbox</title>
+    <style>
+      :root {
+        --bg-app: #f1f5f9;
+        --bg-surface: #ffffff;
+        --bg-surface-alt: #f8fafc;
+        --border: #e2e8f0;
+        --border-focus: #3b82f6;
+        --text-main: #0f172a;
+        --text-muted: #64748b;
+        --primary: #2563eb;
+        --primary-light: #eff6ff;
+        --success: #16a34a;
+        --success-light: #f0fdf4;
+        --warning: #d97706;
+        --warning-light: #fffbeb;
+        --danger: #dc2626;
+        --danger-light: #fef2f2;
+        --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: var(--font-sans);
+        background-color: var(--bg-app);
+        color: var(--text-main);
+        line-height: 1.5;
+        padding-bottom: 60px;
+      }
+
+      header {
+        background-color: var(--bg-surface);
+        border-bottom: 1px solid var(--border);
+        padding: 20px 0;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+      }
+
+      .container {
+        max-width: 960px;
+        margin: 0 auto;
+        padding: 0 24px;
+      }
+
+      .header-flex {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 16px;
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .brand-icon {
+        width: 36px;
+        height: 36px;
+        background: linear-gradient(135deg, #2563eb, #1d4ed8);
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+      }
+
+      .brand-title {
+        font-size: 18px;
+        font-weight: 700;
+      }
+
+      .brand-subtitle {
+        font-size: 12px;
+        color: var(--text-muted);
+      }
+
+      .header-actions {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 8px 14px;
+        font-size: 13px;
+        font-weight: 600;
+        border-radius: 6px;
+        cursor: pointer;
+        border: 1px solid transparent;
+        transition: all 0.15s ease;
+        text-decoration: none;
+      }
+
+      .btn-primary {
+        background: var(--primary);
+        color: white;
+      }
+      .btn-primary:hover {
+        background: #1d4ed8;
+      }
+
+      .btn-outline {
+        background: white;
+        color: var(--text-main);
+        border-color: var(--border);
+      }
+      .btn-outline:hover {
+        background: var(--bg-surface-alt);
+        border-color: #cbd5e1;
+      }
+
+      .intro-banner {
+        background: white;
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 20px;
+        margin: 24px auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+        flex-wrap: wrap;
+      }
+
+      .intro-text h2 {
+        font-size: 16px;
+        margin-bottom: 4px;
+      }
+
+      .intro-text p {
+        font-size: 13.5px;
+        color: var(--text-muted);
+      }
+
+      .sample-copy-box {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        background: var(--bg-surface-alt);
+        padding: 10px 14px;
+        border-radius: 8px;
+        border: 1px solid var(--border);
+      }
+
+      .sample-preview {
+        font-family: var(--font-mono);
+        font-size: 12px;
+        color: var(--primary);
+        font-weight: 600;
+      }
+
+      .tabs {
+        display: flex;
+        gap: 8px;
+        margin-bottom: 20px;
+        border-bottom: 1px solid var(--border);
+        padding-bottom: 8px;
+      }
+
+      .tab-btn {
+        background: none;
+        border: none;
+        padding: 8px 16px;
+        font-size: 14px;
+        font-weight: 600;
+        color: var(--text-muted);
+        cursor: pointer;
+        border-radius: 6px;
+        transition: all 0.15s;
+      }
+
+      .tab-btn.active {
+        background: var(--primary-light);
+        color: var(--primary);
+      }
+
+      .card {
+        background: var(--bg-surface);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 24px;
+        margin-bottom: 24px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+      }
+
+      .card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 16px;
+      }
+
+      .card-title {
+        font-size: 16px;
+        font-weight: 700;
+      }
+
+      .card-desc {
+        font-size: 13px;
+        color: var(--text-muted);
+        margin-bottom: 20px;
+      }
+
+      .grid-2 {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 16px;
+      }
+
+      .grid-3 {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 14px;
+      }
+
+      .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+
+      .label-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      label {
+        font-size: 12.5px;
+        font-weight: 600;
+        color: var(--text-main);
+      }
+
+      .expected-tag {
+        font-size: 11px;
+        font-family: var(--font-mono);
+        color: var(--text-muted);
+        background: var(--bg-surface-alt);
+        padding: 1px 6px;
+        border-radius: 4px;
+        border: 1px solid var(--border);
+      }
+
+      input[type="text"],
+      input[type="number"],
+      input[type="tel"],
+      input[type="password"],
+      textarea {
+        width: 100%;
+        padding: 9px 12px;
+        font-size: 13.5px;
+        font-family: var(--font-mono);
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        background: var(--bg-surface);
+        color: var(--text-main);
+        outline: none;
+        transition: border-color 0.15s ease, box-shadow 0.15s ease;
+      }
+
+      input:focus, textarea:focus {
+        border-color: var(--border-focus);
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+      }
+
+      input:disabled, input[readonly] {
+        background: #f1f5f9;
+        color: #94a3b8;
+        cursor: not-allowed;
+      }
+
+      .pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        padding: 3px 8px;
+        border-radius: 9999px;
+        font-size: 11px;
+        font-weight: 600;
+      }
+
+      .pill-success { background: var(--success-light); color: var(--success); }
+      .pill-danger { background: var(--danger-light); color: var(--danger); }
+      .pill-warning { background: var(--warning-light); color: var(--warning); }
+      .pill-info { background: var(--primary-light); color: var(--primary); }
+
+      /* Live Reactive State Box */
+      .reactive-preview {
+        background: var(--bg-surface-alt);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 16px;
+        margin-top: 16px;
+      }
+
+      .reactive-preview h4 {
+        font-size: 13px;
+        margin-bottom: 8px;
+        color: var(--text-muted);
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+
+      .reactive-json {
+        font-family: var(--font-mono);
+        font-size: 12px;
+        background: #0f172a;
+        color: #38bdf8;
+        padding: 12px;
+        border-radius: 6px;
+        overflow-x: auto;
+      }
+
+      /* Console / Event Logger */
+      .console-card {
+        background: #0f172a;
+        border-radius: 12px;
+        padding: 16px 20px;
+        color: #f8fafc;
+      }
+
+      .console-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 12px;
+        border-bottom: 1px solid #334155;
+        padding-bottom: 8px;
+      }
+
+      .console-title {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 13px;
+        font-weight: 600;
+        color: #94a3b8;
+      }
+
+      .terminal-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: #22c55e;
+        box-shadow: 0 0 6px #22c55e;
+      }
+
+      .console-output {
+        font-family: var(--font-mono);
+        font-size: 12px;
+        height: 160px;
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+      }
+
+      .log-entry {
+        display: flex;
+        gap: 12px;
+        line-height: 1.4;
+      }
+
+      .log-time { color: #64748b; }
+      .log-event { font-weight: 700; color: #38bdf8; }
+      .log-id { color: #facc15; }
+      .log-val { color: #4ade80; }
+
+      .empty-log {
+        color: #64748b;
+        font-style: italic;
+        padding-top: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="container header-flex">
+        <div class="brand">
+          <div class="brand-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+              <polyline points="14 2 14 8 20 8" />
+              <line x1="16" y1="13" x2="8" y2="13" />
+              <line x1="16" y1="17" x2="8" y2="17" />
+            </svg>
+          </div>
+          <div>
+            <h1 class="brand-title">NumFill</h1>
+            <p class="brand-subtitle">by Mengleangyoeun • Interactive Test Sandbox</p>
+          </div>
+        </div>
+
+        <div class="header-actions">
+          <button type="button" class="btn btn-outline" id="btn-clear-all">Reset All Fields</button>
+          <a href="/popup.html" target="_blank" class="btn btn-outline">Preview Popup UI ↗</a>
+        </div>
+      </div>
+    </header>
+
+    <main class="container">
+      <!-- Intro & Quick Copy Bar -->
+      <section class="intro-banner">
+        <div class="intro-text">
+          <h2>Ready to test your extension!</h2>
+          <p>Click the button on the right to copy sample numbers, then open the extension popup in your toolbar.</p>
+        </div>
+        <div class="sample-copy-box">
+          <div>
+            <div style="font-size: 11px; color: var(--text-muted); margin-bottom: 2px;">Sample Input Numbers:</div>
+            <div class="sample-preview">123456 • 789012 • 345678 • 901234 • 567890</div>
+          </div>
+          <button type="button" class="btn btn-primary" id="btn-copy-sample">
+            <span id="copy-btn-text">Copy Numbers</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- Navigation Tabs -->
+      <nav class="tabs">
+        <button type="button" class="tab-btn active" data-tab="tab-core">Scenario 1: Core 5 Inputs (ai.md)</button>
+        <button type="button" class="tab-btn" data-tab="tab-batch">Scenario 2: 10 Batch Fields</button>
+        <button type="button" class="tab-btn" data-tab="tab-filtering">Scenario 3: Filter & Exclusions</button>
+      </nav>
+
+      <!-- TAB 1: Core 5 Inputs -->
+      <div id="tab-core" class="tab-content">
+        <section class="card">
+          <div class="card-header">
+            <div>
+              <h3 class="card-title">Core Form - 5 Sequential Inputs</h3>
+              <p class="card-desc">Matches the exact test specification from ai.md. The extension should populate these 1 to 5.</p>
+            </div>
+            <span class="pill pill-success">5 Targetable Inputs</span>
+          </div>
+
+          <div class="grid-2">
+            <div class="form-group">
+              <div class="label-row">
+                <label for="core-1">Input 1 (Phone / Account)</label>
+                <span class="expected-tag">Goal: 123456</span>
+              </div>
+              <input type="text" id="core-1" name="phone_number_1" placeholder="Enter or autofill number..." autocomplete="off">
+            </div>
+
+            <div class="form-group">
+              <div class="label-row">
+                <label for="core-2">Input 2 (Order ID)</label>
+                <span class="expected-tag">Goal: 789012</span>
+              </div>
+              <input type="text" id="core-2" name="order_id_2" placeholder="Enter or autofill number..." autocomplete="off">
+            </div>
+
+            <div class="form-group">
+              <div class="label-row">
+                <label for="core-3">Input 3 (Reference Code)</label>
+                <span class="expected-tag">Goal: 345678</span>
+              </div>
+              <input type="text" id="core-3" name="reference_3" placeholder="Enter or autofill number..." autocomplete="off">
+            </div>
+
+            <div class="form-group">
+              <div class="label-row">
+                <label for="core-4">Input 4 (Serial Number)</label>
+                <span class="expected-tag">Goal: 901234</span>
+              </div>
+              <input type="text" id="core-4" name="serial_4" placeholder="Enter or autofill number..." autocomplete="off">
+            </div>
+          </div>
+
+          <div class="form-group" style="margin-top: 16px;">
+            <div class="label-row">
+              <label for="core-5">Input 5 (Notes / Final Value)</label>
+              <span class="expected-tag">Goal: 567890</span>
+            </div>
+            <input type="text" id="core-5" name="final_notes_5" placeholder="Enter or autofill number..." autocomplete="off">
+          </div>
+
+          <!-- Live Reactive State Display -->
+          <div class="reactive-preview">
+            <h4>Live Framework State Watcher (Simulates React useState)</h4>
+            <pre class="reactive-json" id="state-json-view">{\n  "input_1": "",\n  "input_2": "",\n  "input_3": "",\n  "input_4": "",\n  "input_5": ""\n}</pre>
+          </div>
+        </section>
+      </div>
+
+      <!-- TAB 2: 10 Batch Fields -->
+      <div id="tab-batch" class="tab-content" style="display: none;">
+        <section class="card">
+          <div class="card-header">
+            <div>
+              <h3 class="card-title">Batch Processing - 10 Sequential Fields</h3>
+              <p class="card-desc">Tests handling when entering fewer or more numbers than available fields.</p>
+            </div>
+            <span class="pill pill-info">10 Targetable Inputs</span>
+          </div>
+
+          <div class="grid-2">
+            <div class="form-group"><label for="b-1">Batch #1</label><input type="text" id="b-1" placeholder="Field 1"></div>
+            <div class="form-group"><label for="b-2">Batch #2</label><input type="text" id="b-2" placeholder="Field 2"></div>
+            <div class="form-group"><label for="b-3">Batch #3</label><input type="text" id="b-3" placeholder="Field 3"></div>
+            <div class="form-group"><label for="b-4">Batch #4</label><input type="text" id="b-4" placeholder="Field 4"></div>
+            <div class="form-group"><label for="b-5">Batch #5</label><input type="text" id="b-5" placeholder="Field 5"></div>
+            <div class="form-group"><label for="b-6">Batch #6</label><input type="text" id="b-6" placeholder="Field 6"></div>
+            <div class="form-group"><label for="b-7">Batch #7</label><input type="text" id="b-7" placeholder="Field 7"></div>
+            <div class="form-group"><label for="b-8">Batch #8</label><input type="text" id="b-8" placeholder="Field 8"></div>
+            <div class="form-group"><label for="b-9">Batch #9</label><input type="text" id="b-9" placeholder="Field 9"></div>
+            <div class="form-group"><label for="b-10">Batch #10</label><input type="text" id="b-10" placeholder="Field 10"></div>
+          </div>
+        </section>
+      </div>
+
+      <!-- TAB 3: Filter & Exclusions -->
+      <div id="tab-filtering" class="tab-content" style="display: none;">
+        <section class="card">
+          <div class="card-header">
+            <div>
+              <h3 class="card-title">Field Filtering & Edge Cases</h3>
+              <p class="card-desc">Verifies that the extension detector skips non-targetable or sensitive inputs.</p>
+            </div>
+            <span class="pill pill-warning">Filtered by Extension</span>
+          </div>
+
+          <div class="grid-3">
+            <div class="form-group">
+              <label>Password Input <span class="pill pill-danger">Skipped</span></label>
+              <input type="password" value="mysecretpassword" readonly>
+            </div>
+
+            <div class="form-group">
+              <label>Disabled Input <span class="pill pill-danger">Skipped</span></label>
+              <input type="text" value="Disabled field" disabled>
+            </div>
+
+            <div class="form-group">
+              <label>Readonly Input <span class="pill pill-danger">Skipped</span></label>
+              <input type="text" value="Readonly value" readonly>
+            </div>
+
+            <div class="form-group">
+              <label>Hidden Field <span class="pill pill-danger">Skipped</span></label>
+              <input type="hidden" value="hidden_token">
+              <div style="font-size: 12px; color: var(--text-muted); padding: 8px 0;">(Hidden in DOM)</div>
+            </div>
+
+            <div class="form-group">
+              <label>Buttons / Submits <span class="pill pill-danger">Skipped</span></label>
+              <div style="display: flex; gap: 8px;">
+                <input type="button" value="Button" class="btn btn-outline" style="width: auto;">
+                <input type="submit" value="Submit" class="btn btn-outline" style="width: auto;">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Checkboxes / Radios <span class="pill pill-danger">Skipped</span></label>
+              <div style="display: flex; gap: 12px; padding-top: 6px;">
+                <label style="font-weight: normal;"><input type="checkbox"> Option</label>
+                <label style="font-weight: normal;"><input type="radio" name="r1"> Radio</label>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <!-- Live Event Tracker Console -->
+      <section class="console-card">
+        <div class="console-header">
+          <div class="console-title">
+            <span class="terminal-dot"></span>
+            <span>Real-time Event Console (Tracking `input`, `change`, `blur`)</span>
+          </div>
+          <button type="button" id="btn-clear-console" class="btn btn-outline" style="padding: 2px 8px; font-size: 11px; background: transparent; color: #94a3b8; border-color: #334155;">
+            Clear Console
+          </button>
+        </div>
+        <div class="console-output" id="console-stream">
+          <div class="empty-log">Awaiting input activity... When AutoFill Numbers fills fields, events will appear here.</div>
+        </div>
+      </section>
+    </main>
+
+    <script>
+      // 1. Tab switching logic
+      const tabButtons = document.querySelectorAll('.tab-btn');
+      const tabContents = document.querySelectorAll('.tab-content');
+
+      tabButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          tabButtons.forEach(b => b.classList.remove('active'));
+          tabContents.forEach(c => c.style.display = 'none');
+
+          btn.classList.add('active');
+          const target = document.getElementById(btn.dataset.tab);
+          if (target) target.style.display = 'block';
+        });
+      });
+
+      // 2. Sample numbers copy button
+      const sampleNumbers = "123456\n789012\n345678\n901234\n567890";
+      const copyBtn = document.getElementById('btn-copy-sample');
+      const copyText = document.getElementById('copy-btn-text');
+
+      copyBtn.addEventListener('click', async () => {
+        try {
+          await navigator.clipboard.writeText(sampleNumbers);
+          copyText.textContent = "Copied ✓";
+          setTimeout(() => { copyText.textContent = "Copy Numbers"; }, 2000);
+        } catch {
+          alert("Sample numbers:\n" + sampleNumbers);
+        }
+      });
+
+      // 3. Reset all fields
+      document.getElementById('btn-clear-all').addEventListener('click', () => {
+        document.querySelectorAll('input:not([type="submit"]):not([type="button"]):not([type="checkbox"]):not([type="radio"]):not([type="password"]), textarea').forEach(el => {
+          if (!el.disabled && !el.readOnly) {
+            el.value = '';
+            el.dispatchEvent(new Event('input', { bubbles: true }));
+          }
+        });
+        updateStateViewer();
+      });
+
+      // 4. Live Event Logger
+      const consoleStream = document.getElementById('console-stream');
+      const stateView = document.getElementById('state-json-view');
+      let hasEvents = false;
+
+      function logEvent(type, target) {
+        if (!hasEvents) {
+          consoleStream.innerHTML = '';
+          hasEvents = true;
+        }
+
+        const now = new Date();
+        const timeStr = now.toTimeString().split(' ')[0] + '.' + String(now.getMilliseconds()).padStart(3, '0');
+        const idStr = target.id || target.name || target.tagName.toLowerCase();
+        const valStr = target.value ? `"${target.value}"` : '""';
+
+        const row = document.createElement('div');
+        row.className = 'log-entry';
+        row.innerHTML = `
+          <span class="log-time">[${timeStr}]</span>
+          <span class="log-event">${type.toUpperCase()}</span>
+          <span class="log-id">#${idStr}</span>
+          <span>→</span>
+          <span class="log-val">${valStr}</span>
+        `;
+
+        consoleStream.prepend(row);
+        updateStateViewer();
+      }
+
+      function updateStateViewer() {
+        const state = {
+          input_1: document.getElementById('core-1')?.value || '',
+          input_2: document.getElementById('core-2')?.value || '',
+          input_3: document.getElementById('core-3')?.value || '',
+          input_4: document.getElementById('core-4')?.value || '',
+          input_5: document.getElementById('core-5')?.value || '',
+        };
+        if (stateView) {
+          stateView.textContent = JSON.stringify(state, null, 2);
+        }
+      }
+
+      // Attach event listeners to all targetable inputs
+      document.querySelectorAll('input, textarea').forEach(el => {
+        ['input', 'change', 'blur'].forEach(evt => {
+          el.addEventListener(evt, (e) => logEvent(evt, e.target));
+        });
+      });
+
+      // Clear console button
+      document.getElementById('btn-clear-console').addEventListener('click', () => {
+        consoleStream.innerHTML = '<div class="empty-log">Console cleared. Awaiting activity...</div>';
+        hasEvents = false;
+      });
+    </script>
+  </body>
+</html>

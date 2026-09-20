@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AutoFill Numbers Extension - Test Sandbox</title>
+  <style>
+    :root {
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --border: #e2e8f0;
+      --text: #0f172a;
+      --text-muted: #64748b;
+      --primary: #2563eb;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 0 20px;
+      line-height: 1.6;
+    }
+    h1 {
+      font-size: 24px;
+      margin-bottom: 8px;
+    }
+    .subtitle {
+      color: var(--text-muted);
+      margin-bottom: 24px;
+    }
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 24px;
+      margin-bottom: 24px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+    .card-title {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .form-group {
+      margin-bottom: 16px;
+    }
+    label {
+      display: block;
+      font-size: 13px;
+      font-weight: 500;
+      margin-bottom: 6px;
+    }
+    input[type="text"],
+    input[type="number"],
+    input[type="tel"],
+    textarea {
+      width: 100%;
+      padding: 8px 12px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-size: 14px;
+      box-sizing: border-box;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    input:focus, textarea:focus {
+      border-color: var(--primary);
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .ignored-section {
+      opacity: 0.75;
+      background: #f1f5f9;
+      border-radius: 6px;
+      padding: 16px;
+      margin-top: 12px;
+    }
+    .event-log {
+      background: #0f172a;
+      color: #38bdf8;
+      font-family: monospace;
+      font-size: 12px;
+      padding: 12px;
+      border-radius: 6px;
+      height: 120px;
+      overflow-y: auto;
+      white-space: pre-wrap;
+    }
+    .badge {
+      font-size: 11px;
+      padding: 2px 6px;
+      border-radius: 4px;
+      background: #e2e8f0;
+      font-weight: normal;
+    }
+  </style>
+</head>
+<body>
+  <h1>AutoFill Numbers - Test Page</h1>
+  <p class="subtitle">Use this page to test field detection, sequential filling, and framework event compatibility.</p>
+
+  <!-- Section 1: Standard 5 Target Fields (from ai.md example) -->
+  <div class="card">
+    <div class="card-title">
+      <span>1. Primary Target Inputs (5 sequential fields)</span>
+      <span class="badge">Targetable</span>
+    </div>
+    <div class="grid">
+      <div class="form-group">
+        <label for="input-1">Input 1 (Phone / Account)</label>
+        <input type="text" id="input-1" name="account_1" placeholder="Expected: 123456">
+      </div>
+      <div class="form-group">
+        <label for="input-2">Input 2 (Order ID)</label>
+        <input type="text" id="input-2" name="account_2" placeholder="Expected: 789012">
+      </div>
+      <div class="form-group">
+        <label for="input-3">Input 3 (Reference Code)</label>
+        <input type="text" id="input-3" name="account_3" placeholder="Expected: 345678">
+      </div>
+      <div class="form-group">
+        <label for="input-4">Input 4 (Serial Number)</label>
+        <input type="text" id="input-4" name="account_4" placeholder="Expected: 901234">
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="input-5">Input 5 (Notes / Final Number)</label>
+      <input type="text" id="input-5" name="account_5" placeholder="Expected: 567890">
+    </div>
+  </div>
+
+  <!-- Section 2: Framework Event Tracking Simulation -->
+  <div class="card">
+    <div class="card-title">
+      <span>2. Framework Event Tracker (Simulates React / Vue state listener)</span>
+      <span class="badge">Event Verification</span>
+    </div>
+    <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 12px;">
+      Watches for <code>input</code>, <code>change</code>, and <code>blur</code> events triggered on the inputs above:
+    </p>
+    <div class="event-log" id="log-output">Ready. Events dispatched by AutoFill Numbers will appear here in real time...</div>
+  </div>
+
+  <!-- Section 3: Non-fillable elements (should be completely ignored by detector) -->
+  <div class="card">
+    <div class="card-title">
+      <span>3. Excluded Fields (Ignored by Detector)</span>
+      <span class="badge">Excluded</span>
+    </div>
+    <p style="font-size: 13px; color: var(--text-muted);">
+      These elements must be skipped according to the core requirements (passwords, buttons, disabled, readonly, hidden):
+    </p>
+    <div class="ignored-section">
+      <div class="grid">
+        <div class="form-group">
+          <label>Password (Ignored)</label>
+          <input type="password" value="secret" readonly>
+        </div>
+        <div class="form-group">
+          <label>Disabled Input (Ignored)</label>
+          <input type="text" value="Cannot edit" disabled>
+        </div>
+        <div class="form-group">
+          <label>Readonly Input (Ignored)</label>
+          <input type="text" value="Read only" readonly>
+        </div>
+        <div class="form-group">
+          <label>Hidden Input (Ignored)</label>
+          <input type="hidden" value="hidden_value">
+          <span style="font-size: 12px; color: var(--text-muted);">(Hidden input is in DOM)</span>
+        </div>
+      </div>
+      <div style="margin-top: 10px; display: flex; gap: 10px;">
+        <input type="submit" value="Submit Button (Ignored)">
+        <input type="button" value="Button (Ignored)">
+        <label><input type="checkbox"> Checkbox (Ignored)</label>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const logEl = document.getElementById('log-output');
+    function logEvent(type, target) {
+      const time = new Date().toLocaleTimeString();
+      const id = target.id || target.name || target.tagName;
+      const val = target.value;
+      const line = `[${time}] Event '${type}' fired on <${target.tagName.toLowerCase()} id="${id}"> -> Value: "${val}"`;
+      logEl.textContent = line + '\n' + logEl.textContent;
+    }
+
+    ['input-1', 'input-2', 'input-3', 'input-4', 'input-5'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) {
+        ['input', 'change', 'blur'].forEach(evtType => {
+          el.addEventListener(evtType, (e) => logEvent(evtType, e.target));
+        });
+      }
+    });
+  </script>
+</body>
+</html>
